@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Carta de sabores | Heladería</title>
+  <meta name="description" content="Carta digital de sabores de heladería, diseñada para facilitar la navegación con lectores de pantalla.">
+  <style>
+    :root {
+      --color-texto: #202124;
+      --color-fondo: #ffffff;
+      --color-panel: #f4f7fb;
+      --color-borde: #687386;
+      --color-enlace: #123f8c;
+      --color-enlace-hover: #08295f;
+      --color-foco: #ffbf47;
+      --ancho-contenido: 68rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--color-fondo);
+      color: var(--color-texto);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.125rem;
+      line-height: 1.65;
+    }
+
+    a { color: var(--color-enlace); text-underline-offset: 0.18em; }
+    a:hover { color: var(--color-enlace-hover); }
+
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--color-foco);
+      outline-offset: 4px;
+    }
+
+    .salto {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      z-index: 10;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      color: #111;
+      border: 2px solid #111;
+      transform: translateY(-180%);
+    }
+
+    .salto:focus { transform: translateY(0); }
+
+    .contenedor {
+      width: min(100% - 2rem, var(--ancho-contenido));
+      margin-inline: auto;
+    }
+
+    header {
+      padding: 2rem 0 1.5rem;
+      background: #eef4ff;
+      border-bottom: 3px solid #243f72;
+    }
+
+    h1, h2, h3 { line-height: 1.25; }
+    h1 { margin: 0 0 0.5rem; font-size: clamp(2rem, 5vw, 3rem); }
+    h2 { margin-top: 0; font-size: clamp(1.45rem, 3vw, 2rem); }
+    p { max-width: 72ch; }
+
+    .bajada { margin: 0; font-size: 1.125rem; }
+
+    main { padding-block: 1.5rem 3rem; }
+
+    .ayuda {
+      padding: 1rem 1.25rem;
+      background: var(--color-panel);
+      border-left: 5px solid #243f72;
+      margin-bottom: 1.5rem;
+    }
+
+    .herramientas {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border: 2px solid var(--color-borde);
+      border-radius: 0.75rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="search"] {
+      display: block;
+      width: 100%;
+      min-height: 3rem;
+      padding: 0.7rem 0.85rem;
+      border: 2px solid #4b5563;
+      border-radius: 0.35rem;
+      background: #fff;
+      color: #111;
+      font: inherit;
+    }
+
+    .nota-campo { margin: 0.5rem 0 0; font-size: 1rem; }
+    #estado-busqueda { margin: 0.75rem 0 0; font-weight: 650; }
+
+    nav {
+      margin: 1.5rem 0 2rem;
+      padding: 1.25rem;
+      border: 2px solid var(--color-borde);
+      border-radius: 0.75rem;
+    }
+
+    nav h2 { font-size: 1.35rem; margin-bottom: 0.75rem; }
+    nav ul { margin: 0; padding-left: 1.5rem; columns: 2; column-gap: 2rem; }
+    nav li { break-inside: avoid; padding: 0.2rem 0; }
+
+    .categoria {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border: 1px solid #a7afbd;
+      border-radius: 0.75rem;
+      scroll-margin-top: 1rem;
+    }
+
+    .categoria h2 { margin-bottom: 0.75rem; }
+    .sabores { margin: 0; padding-left: 1.75rem; }
+    .sabores li { padding: 0.22rem 0; }
+    .sin-resultados { padding: 1rem; background: #fff4e5; border: 2px solid #8a4b08; }
+    [hidden] { display: none !important; }
+
+    footer {
+      padding: 1.5rem 0 2rem;
+      background: #f4f7fb;
+      border-top: 1px solid #a7afbd;
+    }
+
+    footer p { margin-block: 0.4rem; }
+
+    @media (max-width: 38rem) {
+      body { font-size: 1.05rem; }
+      nav ul { columns: 1; }
+      .contenedor { width: min(100% - 1.25rem, var(--ancho-contenido)); }
+      .categoria, .herramientas, nav { padding: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      body { font-size: 12pt; }
+      .herramientas, .salto { display: none; }
+      header { background: #fff; }
+      .categoria { break-inside: avoid; }
+      a { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <a class="salto" href="#contenido">Saltar al contenido principal</a>
+
+  <header>
+    <div class="contenedor">
+      <h1>Carta de sabores</h1>
+      <p class="bajada">Explorá los sabores por categoría. Esta carta está preparada para facilitar la navegación con TalkBack y otros lectores de pantalla.</p>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenedor">
+    <div class="ayuda">
+      <p><strong>Cómo recorrer la carta:</strong> podés usar el índice para ir directamente a una categoría o buscar un sabor por su nombre. Con TalkBack, recorré los controles y los textos con los gestos habituales de tu teléfono.</p>
+    </div>
+
+    <section class="herramientas" aria-labelledby="titulo-busqueda">
+      <h2 id="titulo-busqueda">Buscar un sabor</h2>
+      <label for="buscar">Escribí el nombre del sabor</label>
+      <input id="buscar" type="search" autocomplete="off" placeholder="Por ejemplo: chocolate">
+      <p class="nota-campo">La búsqueda no distingue entre mayúsculas y minúsculas. Borrá el texto para volver a ver todos los sabores.</p>
+      <p id="estado-busqueda" role="status" aria-live="polite" aria-atomic="true">Se muestran todos los sabores.</p>
+    </section>
+
+    <nav aria-labelledby="titulo-indice">
+      <h2 id="titulo-indice">Índice de categorías</h2>
+      <ul>
+        <li><a href="#cremas-especiales">Cremas especiales</a></li>
+        <li><a href="#frutas-agua">Frutas al agua</a></li>
+        <li><a href="#chocolates">Chocolates</a></li>
+        <li><a href="#cremas">Cremas</a></li>
+        <li><a href="#frutas-crema">Frutas a la crema</a></li>
+        <li><a href="#dulces-leche">Dulces de leche</a></li>
+      </ul>
+    </nav>
+
+    <div id="lista-categorias">
+      <section class="categoria" id="cremas-especiales" aria-labelledby="titulo-cremas-especiales">
+        <h2 id="titulo-cremas-especiales">Cremas especiales</h2>
+        <ul class="sabores">
+          <li>Crema flan</li>
+          <li>Súper Gridito</li>
+          <li>Tiramisú</li>
+          <li>Crema cookie</li>
+          <li>Mascarpone con frutos del bosque</li>
+          <li>Tramontana</li>
+          <li>Marroc</li>
+          <li>Cappuccino granizado</li>
+        </ul>
+      </section>
+
+      <section class="categoria" id="frutas-agua" aria-labelledby="titulo-frutas-agua">
+        <h2 id="titulo-frutas-agua">Frutas al agua</h2>
+        <ul class="sabores">
+          <li>Maracuyá</li>
+          <li>Limón</li>
+          <li>Naranja</li>
+          <li>Frutilla</li>
+          <li>Mango</li>
+          <li>Frutos rojos</li>
+        </ul>
+      </section>
+
+      <section class="categoria" id="chocolates" aria-labelledby="titulo-chocolates">
+        <h2 id="titulo-chocolates">Chocolates</h2>
+        <ul class="sabores">
+          <li>Chocolate</li>
+          <li>Chocolate con almendras</li>
+          <li>Chocolate blanco</li>
+          <li>Chocolate suizo</li>
+          <li>Chocolate maní crunch</li>
+          <li>Chocolate Dubai</li>
+        </ul>
+      </section>
+
+      <section class="categoria" id="cremas" aria-labelledby="titulo-cremas">
+        <h2 id="titulo-cremas">Cremas</h2>
+        <ul class="sabores">
+          <li>Vainilla</li>
+          <li>Granizado</li>
+          <li>Crema Americana</li>
+          <li>Crema Rusa</li>
+          <li>Menta granizada</li>
+        </ul>
+      </section>
+
+      <section class="categoria" id="frutas-crema" aria-labelledby="titulo-frutas-crema">
+        <h2 id="titulo-frutas-crema">Frutas a la crema</h2>
+        <ul class="sabores">
+          <li>Durazno a la crema</li>
+          <li>Ananá a la crema</li>
+          <li>Banana con dulce de leche</li>
+          <li>Cereza</li>
+          <li>Frutilla a la crema</li>
+          <li>Kinotos al whisky</li>
+        </ul>
+      </section>
+
+      <section class="categoria" id="dulces-leche" aria-labelledby="titulo-dulces-leche">
+        <h2 id="titulo-dulces-leche">Dulces de leche</h2>
+        <ul class="sabores">
+          <li>Dulce de leche</li>
+          <li>Dulce de leche granizado</li>
+          <li>Dulce de leche con brownie</li>
+          <li>Súper Dulce de Leche Grido</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <p id="sin-resultados" class="sin-resultados" hidden>No se encontraron sabores que coincidan con la búsqueda. Probá con otro nombre o borrá el texto para ver la carta completa.</p>
+
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <p><strong>Carta digital de sabores</strong></p>
+      <p>Si algún sabor no aparece o necesitás confirmar su disponibilidad, consultá al personal del local.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      const campo = document.getElementById("buscar");
+      const estado = document.getElementById("estado-busqueda");
+      const sinResultados = document.getElementById("sin-resultados");
+      const categorias = Array.from(document.querySelectorAll(".categoria"));
+      const totalSabores = categorias.reduce(function (total, categoria) {
+        return total + categoria.querySelectorAll("li").length;
+      }, 0);
+
+      function normalizar(texto) {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
+      }
+
+      function filtrar() {
+        const consulta = normalizar(campo.value.trim());
+        let encontrados = 0;
+        let categoriasConResultados = 0;
+
+        categorias.forEach(function (categoria) {
+          const elementos = Array.from(categoria.querySelectorAll(".sabores li"));
+          let visiblesEnCategoria = 0;
+
+          elementos.forEach(function (elemento) {
+            const coincide = normalizar(elemento.textContent).includes(consulta);
+            elemento.hidden = !coincide;
+            if (coincide) {
+              encontrados += 1;
+              visiblesEnCategoria += 1;
+            }
+          });
+
+          categoria.hidden = consulta !== "" && visiblesEnCategoria === 0;
+          if (visiblesEnCategoria > 0) {
+            categoriasConResultados += 1;
+          }
+        });
+
+        if (consulta === "") {
+          estado.textContent = "Se muestran los " + totalSabores + " sabores de la carta.";
+          sinResultados.hidden = true;
+        } else if (encontrados > 0) {
+          estado.textContent = "Se encontraron " + encontrados + (encontrados === 1 ? " sabor" : " sabores") + " en " +
+            categoriasConResultados + (categoriasConResultados === 1 ? " categoría." : " categorías.");
+          sinResultados.hidden = true;
+        } else {
+          estado.textContent = "No se encontraron sabores para: " + campo.value.trim() + ".";
+          sinResultados.hidden = false;
+        }
+      }
+
+      campo.addEventListener("input", filtrar);
+      estado.textContent = "La carta contiene " + totalSabores + " sabores. Escribí para buscar.";
+    }());
+  </script>
+</body>
+</html>
